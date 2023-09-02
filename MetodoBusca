@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int vetor[5];
+    int numeroProcurado;
+
+   
+    for (int i = 0; i < 5; i++) {
+        vetor[i] = rand() % 100 + 1;
+    }
+
+    int indiceAleatorio = rand() % 5;
+    numeroProcurado = vetor[indiceAleatorio];
+
+    int posicao = -1;
+    for (int i = 0; i < 5; i++) {
+        if (vetor[i] == numeroProcurado) {
+            posicao = i;
+            break;
+        }
+    }
+
+    if (posicao != -1) {
+        printf("Número %d encontrado na posição %d do vetor.\n", numeroProcurado, posicao);
+    } else {
+        printf("Número %d não encontrado no vetor.\n", numeroProcurado);
+    }
+
+    return 0;
+}
