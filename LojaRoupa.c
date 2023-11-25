@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h> 
 
-/*define duas estruturas: Roupa, Cliente e fornecedor. Cada uma representa um tipo de dado que 
-pode ser utilizado para armazenar informações sobre roupas e clientes, respectivamente.*/
+/*define tres estruturas: Roupa, Cliente e fornecedor. Cada uma representa um tipo de dado que 
+pode ser utilizado para armazenar informações sobre roupas, clientes e fornecedroes respectivamente.*/
 typedef struct {
     char descricao[50];
     char tipo[30];
@@ -41,12 +41,14 @@ void listarClientesEstado(Cliente clientes[], int n, char estado[]);
 void ordenarRoupasPorPreco(Roupa roupas[], int n);
 void ordenarClientesPorNome(Cliente clientes[], int n);
 void ordenarFornecedoresPorNome(Fornecedor fornecedores[], int n);
+char* marcaComRoupaMaisCara(Roupa roupas[], int n);
 
 int main() {
+
     // Registrar 3 roupas, 3 clientes e 3 fornecedores
     Roupa roupas[] = {
         {"Camiseta", "Manga Curta", "M", 29.99, "MarcaA", "Azul"},
-        {"Calça Jeans", "Jeans", "36", 79.99, "MarcaB", "Azul"},
+        {"Calca Jeans", "Jeans", "36", 79.99, "MarcaB", "Azul"},
         {"Vestido", "Curto", "P", 49.99, "MarcaC", "Vermelho"}
     };
 
@@ -56,7 +58,7 @@ int main() {
         {"Cliente3", 22, "cliente3@email.com", "111222333", "Endereco3", "MG"}
     };
 
-     Fornecedor fornecedores[] = {
+    Fornecedor fornecedores[] = {
         {"Fornecedor1", "enderecoEletronico1", "fornecedor1@email.com", "111111111", "Endereco4", "SP"},
         {"Fornecedor2", "enderecoEletronico2", "fornecedor2@email.com", "222222222", "Endereco5", "RJ"},
         {"Fornecedor3", "enderecoEletronico3", "fornecedor3@email.com", "333333333", "Endereco6", "MG"}
@@ -71,13 +73,14 @@ int main() {
         printf("1. Listar todas as roupas\n");
         printf("2. Listar todos os clientes\n");
         printf("3. Listar os clientes de um determinado estado\n");
-        printf("4. Listar todas as roupas em ordem crescente de preço\n");
+        printf("4. Listar todas as roupas em ordem crescente de preco\n");
         printf("5. Listar todos os clientes em ordem crescente de nome\n");
         printf("6. Listar todos os fornecedores\n");
         printf("7. Listar os fornecedores em ordem crescente de nome\n");
+        printf("8. Marca da roupa mais cara\n");
         printf("0. Sair\n");
 
-        printf("\nEscolha uma opção: ");
+        printf("\nEscolha uma opcao: ");
         scanf("%d", &escolha);
 
         /*Nessa estrutura switch, o código executa diferentes blocos de código com base
@@ -114,21 +117,22 @@ int main() {
                 ordenarFornecedoresPorNome(fornecedores, sizeof(fornecedores) / sizeof(fornecedores[0]));
                 listarFornecedores(fornecedores, sizeof(fornecedores) / sizeof(fornecedores[0]));
                 break;
+            case 8:
+                printf("A marca da roupa mais cara: %s\n", marcaComRoupaMaisCara(roupas, sizeof(roupas) / sizeof(roupas[0])));
+                break;
             case 0:
-                printf("Encerrando o programa. Até mais!\n");
+                printf("Encerrando o programa. Ate mais!\n");
                 break;
             default:
-                printf("Opção inválida. Tente novamente.\n");
+                printf("Opcao invalida.\n");
                 break;
         }
     } while (escolha != 0);
-    printf("Encerrando o programa. Até mais!\n");
+    printf("Encerrando o programa. Ate mais!\n");
     getchar();  // Aguarda uma tecla antes de encerrar
 
     return 0;
 }
-
-   
 
 // Implementação das funções
 /*A função listarRoupas é responsável por exibir as informações de todas as roupas presentes no array de roupas*/
@@ -136,10 +140,10 @@ void listarRoupas(Roupa roupas[], int n) {
     printf("\nLista de Roupas:\n");
     // Inicia um loop for que percorre todas as roupas no array.
     for (int i = 0; i < n; i++) {
-        printf("Descrição: %s\n", roupas[i].descricao);
+        printf("Descricao: %s\n", roupas[i].descricao);
         printf("Tipo: %s\n", roupas[i].tipo);
         printf("Tamanho: %s\n", roupas[i].tamanho);
-        printf("Preço: R$%.2f\n", roupas[i].preco);
+        printf("Preco: R$%.2f\n", roupas[i].preco);
         printf("Marca: %s\n", roupas[i].marca);
         printf("Cor: %s\n\n", roupas[i].cor);
     }
@@ -153,7 +157,7 @@ void listarClientes(Cliente clientes[], int n) {
         printf("Idade: %d\n", clientes[i].idade);
         printf("E-mail: %s\n", clientes[i].email);
         printf("Telefone: %s\n", clientes[i].telefone);
-        printf("Endereço: %s\n", clientes[i].endereco);
+        printf("Endereco: %s\n", clientes[i].endereco);
         printf("UF: %s\n\n", clientes[i].uf);
     }
 }
@@ -165,10 +169,10 @@ void listarFornecedores(Fornecedor fornecedores[], int n) {
     // Inicia um loop for que percorre todos os fornecedores no array.
     for (int i = 0; i < n; i++) {
         printf("Nome: %s\n", fornecedores[i].nome);
-        printf("Endereço Eletrônico: %s\n", fornecedores[i].enderecoEletronico);
+        printf("Endereco Eletronico: %s\n", fornecedores[i].enderecoEletronico);
         printf("E-mail: %s\n", fornecedores[i].email);
         printf("Telefone: %s\n", fornecedores[i].telefone);
-        printf("Endereço: %s\n", fornecedores[i].endereco);
+        printf("Endereco: %s\n", fornecedores[i].endereco);
         printf("UF: %s\n\n", fornecedores[i].uf);
     }
 }
@@ -184,7 +188,7 @@ void listarClientesEstado(Cliente clientes[], int n, char estado[]) {
             printf("Nome: %s\n", clientes[i].nome);
             printf("E-mail: %s\n", clientes[i].email);
             printf("Telefone: %s\n", clientes[i].telefone);
-            printf("Endereço: %s\n", clientes[i].endereco);
+            printf("Endereco: %s\n", clientes[i].endereco);
             printf("UF: %s\n\n", clientes[i].uf);
         }
     }
@@ -251,11 +255,34 @@ void ordenarFornecedoresPorNome(Fornecedor fornecedores[], int n) {
             a string em fornecedores[j].nome é maior do que a string em fornecedores[j + 1].nome, 
             indicando que a troca é necessária.*/
             if (strcmp(fornecedores[j].nome, fornecedores[j + 1].nome) > 0) {
-                //As estruturas Fornecedor em fornecedores[j] e fornecedores[j + 1] são trocadas para reorganizar os elementos do array.
+                //As estruturas Fornecedor em fornecedores[j] e fornecedores[j + 1]
+                //são trocadas para reorganizar os elementos do array.
                 Fornecedor temp = fornecedores[j];
                 fornecedores[j] = fornecedores[j + 1];
                 fornecedores[j + 1] = temp;
             }
         }
     }
+}
+
+/*Declaração da função marcaComRoupaMaisCara. A função recebe um array de roupas (Roupa roupas[])
+e o número total de roupas no array (int n), retornando um ponteiro para uma string (char*).*/
+char* marcaComRoupaMaisCara(Roupa roupas[], int n) {
+    /* Inicializa uma variável maiorPreco para armazenar o preço mais alto encontrado. Inicia com 0.*/
+    float maiorPreco = 0;
+    char marca[30];
+    /*Inicia um loop for que percorre todas as roupas no array. */
+    for (int i = 0; i < n; i++) {
+        /*Verifica se o preço da roupa na posição i é maior que o maior preço encontrado até agora.*/
+        if (roupas[i].preco > maiorPreco) {
+            /*Atualiza o maiorPreco com o preço da roupa na posição i, pois encontramos um preço mais alto.*/
+            maiorPreco = roupas[i].preco;
+            /*Copia a marca da roupa na posição i para a variável marca. A função strncpy garante que não
+            ultrapasse o tamanho máximo de 30 caracteres para a marca.*/
+            strncpy(marca, roupas[i].marca, sizeof(roupas[i].marca));
+        }
+    }
+    /*Retorna uma cópia dinâmica da string marca. A função strdup aloca dinamicamente memória para armazenar
+    uma cópia da string, garantindo que a string seja válida fora da função.*/
+    return strdup(marca);
 }
